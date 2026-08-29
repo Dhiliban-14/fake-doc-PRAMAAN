@@ -1,14 +1,32 @@
-﻿// Preconfigured storage helpers with local filesystem fallback for standalone / offline execution
-import { ENV } from "./_core/env";
+﻿import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { storagePutLocal, storageGetLocal } from "./storage.local";
+import crypto from "node:crypto";
 
-function getForgeConfig() {
-  const forgeUrl = ENV.forgeApiUrl;
-  const forgeKey = ENV.forgeApiKey;
-  if (!forgeUrl || !forgeKey) {
+function getR2Client(): { client: S3Client; bucket: string; publicUrl?: string } | null {
+  const accountId = process.env.R2_ACCOUNT_ID;
+  const accessKeyId = process.env.R2_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
+  const bucket = process.env.R2_BUCKET_NAME;
+
+  if (!accountId || !accessKeyId || !secretAccessKey || !bucket) {
     return null;
   }
-  return { forgeUrl: forgeUrl.replace(/\/+$/, ""), forgeKey };
+
+  const client = new S3Client({
+    region: "auto",
+    endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId,
+      secretAccessKey,
+    },
+  });
+
+  return {
+    client,
+    bucket,
+    publicUrl: process.env.R2_PUBLIC_URL?.replace(/\/+$/, ""),
+  };
 }
 
 function normalizeKey(relKey: string): string {
@@ -25,79 +43,68 @@ function appendHashSuffix(relKey: string): string {
 export async function storagePut(
   relKey: string,
   data: Buffer | Uint8Array | string,
-  contentType = "application/octet-stream",
+  contentType = "application/octet-stream"
 ): Promise<{ key: string; url: string }> {
-  const forge = getForgeConfig();
-  if (!forge) {
-    // Standalone local storage
-    return storagePutLocal(relKey, data, contentType);
+  // Always cache locally for low-latency OCR & tampering analysis
+  const localResult = await storagePutLocal(relKey, data, contentType);
+  const key = localResult.key;
+
+  const r2 = getR2Client();
+  if (r2) {
+    const buffer = Buffer.isBuffer(data)
+      ? data
+      : typeof data === "string"
+      ? Buffer.from(data)
+      : Buffer.from(data);
+
+    await r2.client.send(
+      new PutObjectCommand({
+        Bucket: r2.bucket,
+        Key: key,
+        Body: buffer,
+        ContentType: contentType,
+      })
+    );
+
+    const publicUrl = r2.publicUrl
+      ? `${r2.publicUrl}/${key}`
+      : await getSignedUrl(r2.client, new GetObjectCommand({ Bucket: r2.bucket, Key: key }), {
+          expiresIn: 604800, // 7 days
+        });
+
+    return { key, url: publicUrl };
   }
 
-  const key = appendHashSuffix(normalizeKey(relKey));
-
-  // 1. Get presigned PUT URL from Forge
-  const presignUrl = new URL("v1/storage/presign/put", forge.forgeUrl + "/");
-  presignUrl.searchParams.set("path", key);
-
-  const presignResp = await fetch(presignUrl, {
-    headers: { Authorization: `Bearer ${forge.forgeKey}` },
-  });
-
-  if (!presignResp.ok) {
-    const msg = await presignResp.text().catch(() => presignResp.statusText);
-    throw new Error(`Storage presign failed (${presignResp.status}): ${msg}`);
-  }
-
-  const { url: s3Url } = (await presignResp.json()) as { url: string };
-  if (!s3Url) throw new Error("Forge returned empty presign URL");
-
-  // 2. PUT file directly to S3
-  const blob =
-    typeof data === "string"
-      ? new Blob([data], { type: contentType })
-      : new Blob([data as any], { type: contentType });
-
-  const uploadResp = await fetch(s3Url, {
-    method: "PUT",
-    headers: { "Content-Type": contentType },
-    body: blob,
-  });
-
-  if (!uploadResp.ok) {
-    throw new Error(`Storage upload to S3 failed (${uploadResp.status})`);
-  }
-
-  return { key, url: `/manus-storage/${key}` };
+  return { key, url: localResult.url };
 }
 
 export async function storageGet(relKey: string): Promise<{ key: string; url: string }> {
-  const forge = getForgeConfig();
-  if (!forge) {
-    return storageGetLocal(relKey);
-  }
   const key = normalizeKey(relKey);
-  return { key, url: `/manus-storage/${key}` };
+  const r2 = getR2Client();
+
+  if (r2) {
+    const publicUrl = r2.publicUrl
+      ? `${r2.publicUrl}/${key}`
+      : await getSignedUrl(r2.client, new GetObjectCommand({ Bucket: r2.bucket, Key: key }), {
+          expiresIn: 604800,
+        });
+    return { key, url: publicUrl };
+  }
+
+  return storageGetLocal(relKey);
 }
 
 export async function storageGetSignedUrl(relKey: string): Promise<string> {
-  const forge = getForgeConfig();
-  if (!forge) {
-    return `/uploads/${normalizeKey(relKey)}`;
-  }
   const key = normalizeKey(relKey);
+  const r2 = getR2Client();
 
-  const getUrl = new URL("v1/storage/presign/get", forge.forgeUrl + "/");
-  getUrl.searchParams.set("path", key);
-
-  const resp = await fetch(getUrl, {
-    headers: { Authorization: `Bearer ${forge.forgeKey}` },
-  });
-
-  if (!resp.ok) {
-    const msg = await resp.text().catch(() => resp.statusText);
-    throw new Error(`Storage signed URL failed (${resp.status}): ${msg}`);
+  if (r2) {
+    return r2.publicUrl
+      ? `${r2.publicUrl}/${key}`
+      : await getSignedUrl(r2.client, new GetObjectCommand({ Bucket: r2.bucket, Key: key }), {
+          expiresIn: 604800,
+        });
   }
 
-  const { url } = (await resp.json()) as { url: string };
-  return url;
+  return `/uploads/${key}`;
 }
