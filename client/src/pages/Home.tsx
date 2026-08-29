@@ -731,10 +731,14 @@ export default function Home() {
           <TamperingViewer
             documentImageUrl={
               caseBundle?.evidence?.[0]?.storageKey
-                ? `/uploads/${caseBundle.evidence[0].storageKey}`
+                ? `${import.meta.env.VITE_BACKEND_URL ? String(import.meta.env.VITE_BACKEND_URL).replace(/\/$/, "") : ""}/uploads/${caseBundle.evidence[0].storageKey}`
                 : "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&auto=format&fit=crop&q=80"
             }
-            heatmapUrl={caseBundle?.tamperingMap?.ela?.heatmapPath}
+            heatmapUrl={
+              caseBundle?.tamperingMap?.ela?.heatmapPath
+                ? `${import.meta.env.VITE_BACKEND_URL ? String(import.meta.env.VITE_BACKEND_URL).replace(/\/$/, "") : ""}${caseBundle.tamperingMap.ela.heatmapPath.startsWith("/") ? "" : "/"}${caseBundle.tamperingMap.ela.heatmapPath}`
+                : undefined
+            }
             regions={caseBundle?.tamperingMap?.tamperingRegions || []}
             dimensions={caseBundle?.tamperingMap?.dimensions}
           />
