@@ -1,0 +1,31 @@
+# Project TODO
+
+- [x] Establish PRAMAAN investigator dashboard shell with Scandinavian visual system and accessible navigation
+- [x] Implement secure case-based ingestion for JPG, JPEG, PNG, WEBP, PDF, and camera capture
+- [x] Preserve original evidence metadata with immutable Case ID, Evidence ID, SHA-256, MIME type, dimensions, page count, and UTC timestamps
+- [x] Implement evidence quality, OCR reliability, forensic reliability, and INCONCLUSIVE handling
+- [x] Implement OCR/document-understanding result views with original and normalized claims, confidence, and source locations
+- [x] Implement configurable authoritative-source registry and claim-level verification statuses with evidence references
+- [x] Implement modular document, metadata, and security-feature forensic findings with strength, confidence, and limitations
+- [x] Implement Document DNA, similarity comparison, related-case detection, and fraud-intelligence entity graph views
+- [x] Implement evidence-weighted risk assessment separating risk, confidence, completeness, evidence, limitations, and recommended action
+- [x] Implement digital case management with evidence history, notes, immutable timeline, comparison views, and privacy-aware deletion
+- [x] Implement live-camera verification flow with capture guidance, quality gate, and post-capture deep analysis messaging
+- [x] Implement three honest demo scenarios: verified genuine, visually clean content-suspicious, and genuine with artifacts
+- [x] Implement investigation report export view with observed evidence, system interpretation, recommendations, and audit trail
+- [x] Add backend procedures, database schema, and tests for core case/evidence/report flows
+- [x] Run type checks, Vitest tests, and responsive visual verification
+- [x] Add append-only API and tamper-evident hash safeguards for evidence and forensic timeline records
+- [x] Add real browser camera capture with a lightweight quality gate and explicit post-capture handoff state
+- [x] Clarify DEMO ONLY labels wherever static scenario evidence is shown
+- [x] Add a print/save-as-PDF report action and include recommendations in exported content
+- [x] Add Vitest coverage for evidence MIME validation and SHA-256 contract helpers
+- [x] Add explicit DEMO ONLY badges to case lists, source registry cards, and intelligence graph panels that display static prototype data
+- [x] Add DEMO ONLY badges inside every static source registry card and intelligence graph panel
+- [x] Add DEMO ONLY badge inside static case list/table components
+- [x] Implement hash-chain verification and expose integrity audit status in API, UI, and report output
+- [x] Add backend immutability write-policy guard and tests for blocked update/delete operations
+- [x] Wire the investigator UI and report export to the real cases.audit backend result instead of hardcoded integrity labels
+- [x] Add an end-to-end/backend test covering cases.audit output for evidence record hashes and timeline chain verification
+- [x] Update text report export to use dynamic cases.audit evidence and timeline statuses with honest fallback
+- [x] Invoke the actual cases.audit backend path in Vitest and assert its integrity result contract

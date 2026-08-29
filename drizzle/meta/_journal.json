@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1787938329064,
+      "tag": "0000_clear_ender_wiggin",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1787938780287,
+      "tag": "0001_concerned_bedlam",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1787939389726,
+      "tag": "0002_worthless_ben_urich",
+      "breakpoints": true
+    }
+  ]
+}

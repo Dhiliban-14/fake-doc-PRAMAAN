@@ -1,0 +1,143 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "openId": "local-investigator",
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma@pramaan.gov.in",
+      "loginMethod": "local",
+      "role": "admin",
+      "createdAt": "2026-08-29T08:51:09.186Z",
+      "updatedAt": "2026-08-29T08:51:09.186Z",
+      "lastSignedIn": "2026-08-29T08:51:09.186Z"
+    }
+  ],
+  "cases": [],
+  "evidence": [],
+  "ocrResults": [],
+  "claims": [],
+  "sourceRegistry": [
+    {
+      "id": 1,
+      "organization": "XYZ Government Department",
+      "officialDomain": "xyz.gov.in",
+      "recruitmentPortal": "recruitment.xyz.gov.in",
+      "officialApi": "https://api.xyz.gov.in/v1/notices",
+      "contactInfo": {
+        "email": "recruitment@xyz.gov.in",
+        "helpline": "1800-11-2026"
+      },
+      "knownPatterns": [
+        "17/2026",
+        "CIRCULAR-*",
+        "ADV-*"
+      ],
+      "active": 1,
+      "updatedAt": "2026-08-29T08:51:09.172Z"
+    },
+    {
+      "id": 2,
+      "organization": "Union Public Service Commission (UPSC)",
+      "officialDomain": "upsc.gov.in",
+      "recruitmentPortal": "upsconline.nic.in",
+      "officialApi": "https://upsc.gov.in/notices/api",
+      "contactInfo": {
+        "email": "feedback-upsc@gov.in",
+        "helpline": "011-23098591"
+      },
+      "knownPatterns": [
+        "UPSC/*",
+        "EXAM-*",
+        "NOTIFICATION-*"
+      ],
+      "active": 1,
+      "updatedAt": "2026-08-29T08:51:09.172Z"
+    },
+    {
+      "id": 3,
+      "organization": "Staff Selection Commission (SSC)",
+      "officialDomain": "ssc.gov.in",
+      "recruitmentPortal": "ssc.gov.in",
+      "officialApi": "https://ssc.gov.in/api/v1/exams",
+      "contactInfo": {
+        "email": "enquiry-ssc@nic.in",
+        "helpline": "011-24363343"
+      },
+      "knownPatterns": [
+        "SSC/CGL/*",
+        "SSC/CHSL/*",
+        "NOTICE/*"
+      ],
+      "active": 1,
+      "updatedAt": "2026-08-29T08:51:09.172Z"
+    },
+    {
+      "id": 4,
+      "organization": "National Informatics Centre (NIC)",
+      "officialDomain": "nic.in",
+      "recruitmentPortal": "india.gov.in",
+      "officialApi": "https://data.gov.in",
+      "contactInfo": {
+        "email": "servicedesk@nic.in",
+        "helpline": "1800-111-555"
+      },
+      "knownPatterns": [
+        "NIC-*",
+        "GOV-*"
+      ],
+      "active": 1,
+      "updatedAt": "2026-08-29T08:51:09.172Z"
+    }
+  ],
+  "verificationResults": [],
+  "forensicResults": [],
+  "entities": [],
+  "entityRelationships": [],
+  "documentFingerprints": [
+    {
+      "id": 1,
+      "fileDna": "b5a2c96250612366ea272ffac6d9744aaf4b45aacd96aa7cfcb931ee3b558259",
+      "visualDna": "pHash-275876e3",
+      "perceptualHash": "275876e34cf609db118f3d84b799a790",
+      "ocrTextDna": "0000000000000000",
+      "layoutDna": "layout-none",
+      "templateDna": "T-LAYOUT",
+      "entityDna": "ent-none",
+      "createdAt": "2026-08-29T08:51:09.187Z"
+    },
+    {
+      "id": 2,
+      "fileDna": "b5a2c96250612366ea272ffac6d9744aaf4b45aacd96aa7cfcb931ee3b558259",
+      "visualDna": "pHash-275876e3",
+      "perceptualHash": "275876e34cf609db118f3d84b799a790",
+      "ocrTextDna": "0000000000000000",
+      "layoutDna": "layout-none",
+      "templateDna": "T-LAYOUT",
+      "entityDna": "ent-none",
+      "createdAt": "2026-08-29T08:51:09.187Z"
+    }
+  ],
+  "relatedCases": [],
+  "timelineEvents": [],
+  "investigatorFindings": [],
+  "caseNotes": [],
+  "reports": [],
+  "counters": {
+    "users": 1,
+    "cases": 0,
+    "evidence": 0,
+    "ocrResults": 0,
+    "claims": 0,
+    "sourceRegistry": 4,
+    "verificationResults": 0,
+    "forensicResults": 0,
+    "entities": 0,
+    "entityRelationships": 0,
+    "documentFingerprints": 2,
+    "relatedCases": 0,
+    "timelineEvents": 0,
+    "investigatorFindings": 0,
+    "caseNotes": 0,
+    "reports": 0
+  }
+}
