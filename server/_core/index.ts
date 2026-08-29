@@ -1,8 +1,10 @@
 import "dotenv/config";
+import fs from "node:fs";
 import path from "node:path";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
+import { eq } from "drizzle-orm";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { registerStorageProxy } from "./storageProxy";
@@ -10,6 +12,8 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { registerSwagger } from "../swagger";
+import { getDb } from "../db";
+import { evidenceBlobs } from "../../drizzle/schema";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -55,6 +59,39 @@ async function startServer() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
+  // Static uploads with auto-restore from TiDB Cloud Storage
+  app.use("/uploads", async (req, res, next) => {
+    const relKey = req.path.replace(/^\/+/, "");
+    const localPath = path.resolve(process.cwd(), "uploads", relKey);
+
+    if (fs.existsSync(localPath)) {
+      return res.sendFile(localPath);
+    }
+
+    try {
+      const db = await getDb();
+      if (db) {
+        const rows = await db
+          .select()
+          .from(evidenceBlobs)
+          .where(eq(evidenceBlobs.storageKey, relKey))
+          .limit(1);
+
+        if (rows.length > 0) {
+          const blob = rows[0];
+          const buffer = Buffer.from(blob.fileData, "base64");
+          fs.mkdirSync(path.dirname(localPath), { recursive: true });
+          fs.writeFileSync(localPath, buffer);
+          res.type(blob.mimeType);
+          return res.send(buffer);
+        }
+      }
+    } catch (e) {
+      console.warn("[Uploads] TiDB restore error:", e);
+    }
+
+    next();
+  });
   app.use("/uploads", express.static(path.resolve(process.cwd(), "uploads")));
   registerOAuthRoutes(app);
   // tRPC API

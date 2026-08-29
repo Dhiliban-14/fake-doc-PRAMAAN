@@ -1,4 +1,4 @@
-import { int, json, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, json, mysqlEnum, mysqlTable, text, timestamp, varchar, longtext } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
@@ -183,7 +183,18 @@ export const reports = mysqlTable("reports", {
   generatedAt: timestamp("generatedAt").defaultNow().notNull(),
 });
 
+export const evidenceBlobs = mysqlTable("evidenceBlobs", {
+  storageKey: varchar("storageKey", { length: 512 }).primaryKey(),
+  mimeType: varchar("mimeType", { length: 128 }).notNull(),
+  fileData: longtext("fileData").notNull(),
+  fileSize: int("fileSize").notNull(),
+  sha256: varchar("sha256", { length: 64 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 export type Case = typeof cases.$inferSelect;
 export type Evidence = typeof evidence.$inferSelect;
+export type EvidenceBlob = typeof evidenceBlobs.$inferSelect;
+export type InsertEvidenceBlob = typeof evidenceBlobs.$inferInsert;
