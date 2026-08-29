@@ -37,7 +37,13 @@ queryClient.getMutationCache().subscribe(event => {
   }
 });
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL ? String(import.meta.env.VITE_BACKEND_URL).replace(/\/$/, "") : "";
+const defaultBackend =
+  typeof window !== "undefined" && window.location.hostname.includes("vercel.app")
+    ? "https://pramaan-backend-4tw7.onrender.com"
+    : "";
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+  ? String(import.meta.env.VITE_BACKEND_URL).replace(/\/$/, "")
+  : defaultBackend;
 const trpcUrl = `${backendUrl}/api/trpc`;
 
 const trpcClient = trpc.createClient({

@@ -1,10 +1,26 @@
 import { createHash } from "node:crypto";
 
-export const SUPPORTED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "application/pdf"] as const;
+export const SUPPORTED_MIME_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/pjpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+  "application/x-pdf",
+] as const;
 export const MAX_EVIDENCE_BYTES = 25 * 1024 * 1024;
 
+export function normalizeMimeType(mimeType: string): string {
+  const m = (mimeType || "").toLowerCase().trim();
+  if (m === "image/jpg" || m === "image/pjpeg") return "image/jpeg";
+  if (m === "application/x-pdf") return "application/pdf";
+  return m;
+}
+
 export function isSupportedEvidenceMimeType(mimeType: string): boolean {
-  return (SUPPORTED_MIME_TYPES as readonly string[]).includes(mimeType);
+  const norm = normalizeMimeType(mimeType);
+  return (SUPPORTED_MIME_TYPES as readonly string[]).includes(norm) || (SUPPORTED_MIME_TYPES as readonly string[]).includes(mimeType);
 }
 
 export function validateEvidenceBytes(bytes: Uint8Array): void {

@@ -413,36 +413,69 @@ export default function Home() {
 
   async function handleFile(file?: File) {
     if (!file) return;
+
+    // Resolve file type with extension fallback
+    let mimeType = (file.type || "").toLowerCase();
+    const ext = file.name.split(".").pop()?.toLowerCase() || "";
+    if (!mimeType || mimeType === "image/jpg" || mimeType === "image/pjpeg") {
+      if (ext === "jpg" || ext === "jpeg") mimeType = "image/jpeg";
+      else if (ext === "png") mimeType = "image/png";
+      else if (ext === "webp") mimeType = "image/webp";
+      else if (ext === "pdf") mimeType = "application/pdf";
+    }
+    if (mimeType === "application/x-pdf") mimeType = "application/pdf";
+
     const allowed = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
-    if (!allowed.includes(file.type)) {
-      toast.error("Unsupported file type", { description: "Use JPG, JPEG, PNG, WEBP, or PDF." });
+    if (!allowed.includes(mimeType)) {
+      toast.error("Unsupported file type", {
+        description: `Received ${file.type || ext || "unknown"}. Please select JPG, JPEG, PNG, WEBP, or PDF.`,
+      });
       return;
     }
+
+    if (file.size > 25 * 1024 * 1024) {
+      toast.error("File too large", { description: "Maximum supported evidence size is 25 MB." });
+      return;
+    }
+
     setIsIngesting(true);
     toast.info("Ingesting evidence...", { description: `Preserving ${file.name} and computing cryptographic hash.` });
+
     try {
       const reader = new FileReader();
       reader.onload = async () => {
         try {
           const base64 = (reader.result as string).split(",")[1];
-          const newCase = await createCaseMutation.mutateAsync({ title: file.name.replace(/\.[^/.]+$/, "") });
+          const rawTitle = file.name.replace(/\.[^/.]+$/, "").trim();
+          const cleanTitle = rawTitle.length >= 3 ? rawTitle : `Case ${rawTitle || Date.now()}`;
+
+          const newCase = await createCaseMutation.mutateAsync({ title: cleanTitle });
           await ingestMutation.mutateAsync({
             caseId: newCase.id,
             originalName: file.name,
-            mimeType: file.type,
+            mimeType: mimeType,
             fileBase64: base64,
           });
+
           setShowUpload(false);
           setAppMode("LIVE");
           setSelectedCaseId(newCase.caseId);
           await refetchCases();
           await refetchBundle();
-          toast.success("Evidence anchored in Live Store", { description: `Case ${newCase.caseId} initialized. Analysis stages executing asynchronously.` });
+          toast.success("Evidence anchored in Live Store", {
+            description: `Case ${newCase.caseId} initialized. Analysis stages executing asynchronously.`,
+          });
         } catch (err: any) {
-          toast.error("Ingestion error", { description: err.message });
+          console.error("Ingestion error:", err);
+          toast.error("Ingestion error", { description: err.message || "Failed to transmit evidence payload." });
         } finally {
           setIsIngesting(false);
+          if (fileInput.current) fileInput.current.value = "";
         }
+      };
+      reader.onerror = () => {
+        setIsIngesting(false);
+        toast.error("File read error", { description: "Could not read the selected local file." });
       };
       reader.readAsDataURL(file);
     } catch (err: any) {
