@@ -19,22 +19,6 @@ export async function createContext(
     user = null;
   }
 
-  // Standalone local development fallback: ensure investigator operations function smoothly
-  if (!user) {
-    const now = new Date();
-    user = {
-      id: 1,
-      openId: "local-investigator",
-      name: "Aarav Sharma",
-      email: "aarav.sharma@pramaan.gov.in",
-      loginMethod: "local",
-      role: "admin",
-      createdAt: now,
-      updatedAt: now,
-      lastSignedIn: now,
-    };
-  }
-
   return {
     req: opts.req,
     res: opts.res,

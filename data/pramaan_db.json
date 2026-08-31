@@ -10,6 +10,17 @@
       "createdAt": "2026-08-29T08:51:09.186Z",
       "updatedAt": "2026-08-29T08:51:09.186Z",
       "lastSignedIn": "2026-08-29T08:51:09.186Z"
+    },
+    {
+      "id": 2,
+      "openId": "investigator-official",
+      "name": "Aarav Sharma",
+      "email": "investigator@pramaan.gov.in",
+      "loginMethod": "credentials",
+      "role": "admin",
+      "lastSignedIn": "2026-08-31T07:04:44.381Z",
+      "createdAt": "2026-08-31T07:01:33.114Z",
+      "updatedAt": "2026-08-31T07:04:44.381Z"
     }
   ],
   "cases": [],
@@ -123,7 +134,7 @@
   "caseNotes": [],
   "reports": [],
   "counters": {
-    "users": 1,
+    "users": 2,
     "cases": 0,
     "evidence": 0,
     "ocrResults": 0,
@@ -139,5 +150,12 @@
     "investigatorFindings": 0,
     "caseNotes": 0,
     "reports": 0
-  }
+  },
+  "tamperingMaps": [],
+  "identityDna": [],
+  "contradictions": [],
+  "riskBreakdowns": [],
+  "decisionGuidance": [],
+  "fraudPatterns": [],
+  "investigatorFeedback": []
 }

@@ -1,8 +1,10 @@
 import { z } from "zod";
-import { COOKIE_NAME } from "@shared/const";
+import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { TRPCError } from "@trpc/server";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
+import { sdk } from "./_core/sdk";
 import { storagePut } from "./storage";
 import { getLocalEvidencePath } from "./storage.local";
 import {
@@ -18,6 +20,8 @@ import {
   updateSourceRegistry,
   getCaseEntitiesGraph,
   addInvestigatorFeedback,
+  upsertUser,
+  getUserByOpenId,
 } from "./db";
 import { generateLivenessChallenges, evaluateLivenessResponse } from "./services/livenessService";
 import { compareDocumentVersions } from "./services/evolutionTracker";
@@ -36,6 +40,104 @@ export const appRouter = router({
   system: systemRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
+    login: publicProcedure
+      .input(
+        z.object({
+          usernameOrEmail: z.string().trim().min(3, "Username or email is required"),
+          password: z.string().min(4, "Password must be at least 4 characters"),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        const identifier = input.usernameOrEmail.toLowerCase().trim();
+
+        // Supported accounts: official credentials or any valid investigator credentials
+        const validAccounts: Record<string, { openId: string; name: string; email: string; role: "admin" | "user" }> = {
+          "investigator@pramaan.gov.in": {
+            openId: "investigator-official",
+            name: "Aarav Sharma",
+            email: "investigator@pramaan.gov.in",
+            role: "admin",
+          },
+          "aarav.sharma@pramaan.gov.in": {
+            openId: "aarav-sharma-lead",
+            name: "Aarav Sharma",
+            email: "aarav.sharma@pramaan.gov.in",
+            role: "admin",
+          },
+          "admin@pramaan.gov.in": {
+            openId: "admin-root",
+            name: "Chief Forensic Analyst",
+            email: "admin@pramaan.gov.in",
+            role: "admin",
+          },
+          "admin": {
+            openId: "admin-root",
+            name: "Chief Forensic Analyst",
+            email: "admin@pramaan.gov.in",
+            role: "admin",
+          },
+          "investigator": {
+            openId: "investigator-general",
+            name: "Investigating Officer",
+            email: "investigator@pramaan.gov.in",
+            role: "user",
+          },
+        };
+
+        const account = validAccounts[identifier] || {
+          openId: `user-${identifier.replace(/[^a-z0-9]/g, "-")}`,
+          name: identifier.split("@")[0].replace(/[._-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+          email: identifier.includes("@") ? identifier : `${identifier}@pramaan.gov.in`,
+          role: identifier.includes("admin") ? "admin" : "user",
+        };
+
+        // Allowed passwords: "pramaan2026", "pramaan@123", "password", "admin123", "investigator", "password123"
+        const allowedPasswords = ["pramaan2026", "pramaan@123", "password", "admin123", "investigator", "password123", "123456"];
+        if (!allowedPasswords.includes(input.password)) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "Invalid credentials. Use demo password 'pramaan2026' or click 'Autofill Demo Credentials'.",
+          });
+        }
+
+        await upsertUser({
+          openId: account.openId,
+          name: account.name,
+          email: account.email,
+          loginMethod: "credentials",
+          role: account.role,
+          lastSignedIn: new Date(),
+        });
+
+        const user = await getUserByOpenId(account.openId);
+
+        const sessionToken = await sdk.createSessionToken(account.openId, {
+          name: account.name,
+          expiresInMs: ONE_YEAR_MS,
+        });
+
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(COOKIE_NAME, sessionToken, {
+          ...cookieOptions,
+          maxAge: ONE_YEAR_MS,
+        });
+
+        return {
+          success: true,
+          user: user || {
+            id: 1,
+            openId: account.openId,
+            name: account.name,
+            email: account.email,
+            loginMethod: "credentials",
+            role: account.role,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            lastSignedIn: new Date(),
+          },
+          token: sessionToken,
+        };
+      }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });

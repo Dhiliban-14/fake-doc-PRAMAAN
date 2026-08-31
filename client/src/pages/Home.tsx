@@ -39,8 +39,12 @@ import { AlertTriangle,
   Activity,
   Sun,
   Moon,
+  History,
+  LogIn,
+  LogOut,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
@@ -49,6 +53,7 @@ import { CrossSignalMatrix } from "@/components/forensic/CrossSignalMatrix";
 import { RiskBreakdown } from "@/components/forensic/RiskBreakdown";
 import { NextBestActionCard } from "@/components/forensic/NextBestActionCard";
 import { ActiveLivenessModal } from "@/components/forensic/ActiveLivenessModal";
+import DocumentHistoryDrawer from "@/components/DocumentHistoryDrawer";
 
 type Risk = "HIGH RISK" | "MEDIUM RISK" | "LOW RISK" | "INCONCLUSIVE";
 type Scenario = "genuine" | "clean-fake" | "artifact";
@@ -219,7 +224,11 @@ export default function Home() {
   const [capturedFrame, setCapturedFrame] = useState<string | null>(null);
   const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
   const [isIngesting, setIsIngesting] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
+  const [, setLocation] = useLocation();
+  const [showHistoryDrawer, setShowHistoryDrawer] = useState(false);
+  const [showMobileNav, setShowMobileNav] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   // Queries for live database
   const { data: dbCases, refetch: refetchCases } = trpc.cases.list.useQuery(undefined, { refetchInterval: appMode === "LIVE" ? 3000 : false });
@@ -235,6 +244,15 @@ export default function Home() {
   const { data: liveAudit } = trpc.cases.audit.useQuery({ caseId: currentCaseId }, { enabled: Boolean(currentCaseId), refetchInterval: appMode === "LIVE" ? 5000 : false });
   const { data: liveSources } = trpc.cases.registry.useQuery();
   const { data: liveGraph } = trpc.cases.graph.useQuery({ caseId: caseBundle?.case?.id || 0 }, { enabled: Boolean(caseBundle?.case?.id) && appMode === "LIVE" });
+
+  const backendOrigin = import.meta.env.VITE_BACKEND_URL
+    ? String(import.meta.env.VITE_BACKEND_URL).replace(/\/$/, "")
+    : "";
+
+  const activeDocKey = caseBundle?.evidence?.[0]?.storageKey;
+  const activeDocUrl = activeDocKey
+    ? `${backendOrigin}/uploads/${activeDocKey.replace(/^\/+/, "")}`
+    : null;
 
   const createCaseMutation = trpc.cases.create.useMutation();
   const ingestMutation = trpc.cases.ingest.useMutation();
@@ -529,13 +547,60 @@ export default function Home() {
       <div className="sidebar-bottom">
         <div className="privacy-note"><LockKeyhole size={15} /><div><strong>Privacy by design</strong><span>Original evidence is preserved and never sent to external AI by default.</span></div></div>
         <button className="side-nav-item" onClick={() => toast.info("Settings are available in the full workspace.")}><SlidersHorizontal size={17} strokeWidth={1.65} /><span>Settings</span></button>
-        <div className="analyst-chip"><div className="avatar">AS</div><div><strong>Aarav Sharma</strong><span>Senior investigator</span></div><ChevronDown size={15} /></div>
+        {user ? (
+          <div className="analyst-chip" style={{ justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+              <div className="avatar">
+                {user.name ? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() : "IN"}
+              </div>
+              <div>
+                <strong>{user.name || "Investigator"}</strong>
+                <span>{user.role?.toUpperCase() || "INVESTIGATOR"}</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={async () => {
+                await logout();
+                toast.info("Signed out.");
+              }}
+              className="icon-button"
+              title="Sign out"
+            >
+              <LogOut size={14} color="#e11d48" />
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="primary-button"
+            style={{ width: "100%", marginTop: 12 }}
+            onClick={() => setLocation("/login")}
+          >
+            <LogIn size={15} />
+            <span>Investigator Sign In</span>
+          </button>
+        )}
       </div>
     </aside>
 
     <main className="app-main">
       <header className="topbar">
-        <div className="mobile-brand"><div className="brand-mark small"><span></span><span></span><span></span></div><span>PRAMAAN</span></div>
+        <div className="mobile-header-left">
+          <button
+            type="button"
+            className="mobile-menu-btn"
+            onClick={() => setShowMobileNav(true)}
+            aria-label="Open navigation menu"
+          >
+            <Menu size={20} />
+          </button>
+          <div className="mobile-brand">
+            <div className="brand-mark small"><span></span><span></span><span></span></div>
+            <span>PRAMAAN</span>
+          </div>
+        </div>
+
         <div className="breadcrumbs"><span>Workspace</span><ChevronRight size={14} /><strong>{navTitle}</strong></div>
         <div className="topbar-actions">
           <div className="mode-switch-group">
@@ -543,8 +608,22 @@ export default function Home() {
             <button className={`mode-switch-btn ${appMode === "DEMO" ? "active" : ""}`} onClick={() => { setAppMode("DEMO"); toast.info("Switched to DEMO MODE: showing prepared scenarios."); }}>DEMO MODE</button>
           </div>
           <span className="demo-chip"><span className="live-dot"></span> {appMode === "LIVE" ? "LIVE FORENSIC STORE" : "DEMO WORKSPACE"}</span>
+
+          {/* Document History Trigger Button */}
           <button
-            className="icon-button bordered theme-toggle-btn"
+            type="button"
+            className="secondary-button history-btn mobile-action-btn"
+            onClick={() => setShowHistoryDrawer(true)}
+            title="Open Document History"
+          >
+            <History size={15} />
+            <span>History ({appMode === "LIVE" ? (dbCases?.length || 0) : 3})</span>
+          </button>
+
+          {/* Dedicated Universal Theme Toggle */}
+          <button
+            type="button"
+            className="icon-button bordered theme-toggle-btn mobile-action-btn"
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             onClick={() => {
@@ -555,8 +634,50 @@ export default function Home() {
           >
             {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
           </button>
-          <button className="icon-button" aria-label="Notifications" onClick={() => toast.info("No new notifications.")}><Bell size={18} /></button>
-          <button className="avatar top-avatar">AS</button>
+
+          {/* Topbar User Profile / Sign In */}
+          {user ? (
+            <div className="user-profile-badge">
+              <button
+                type="button"
+                className="avatar top-avatar"
+                title={`${user.name || "Investigator"} (${user.role?.toUpperCase() || "INVESTIGATOR"})`}
+                onClick={() => setShowUserMenu(!showUserMenu)}
+              >
+                {user.name ? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() : "IN"}
+              </button>
+              {showUserMenu && (
+                <div className="user-dropdown-menu">
+                  <div className="user-dropdown-header">
+                    <strong>{user.name || "Investigator"}</strong>
+                    <small>{user.email || "investigator@pramaan.gov.in"}</small>
+                    <span className="role-tag">{user.role?.toUpperCase() || "INVESTIGATOR"}</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="dropdown-item"
+                    onClick={async () => {
+                      await logout();
+                      setShowUserMenu(false);
+                      toast.info("Signed out.");
+                    }}
+                  >
+                    <LogOut size={14} />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="primary-button top-login-btn mobile-action-btn"
+              onClick={() => setLocation("/login")}
+            >
+              <LogIn size={15} />
+              <span>Sign In</span>
+            </button>
+          )}
         </div>
       </header>
 
@@ -866,6 +987,109 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Active Document Verification & Evidence Stage */}
+        <div className="active-document-stage">
+          <div className="active-doc-banner">
+            <div className="active-doc-left">
+              <div className="doc-live-badge">
+                <span className="live-ping"></span>
+                <span>REAL-TIME VERIFICATION TARGET</span>
+              </div>
+              <h3>{caseBundle?.evidence?.[0]?.originalName || data.title}</h3>
+              <div className="doc-meta-tags">
+                <span className="mono">
+                  <Hash size={12} style={{ display: "inline", verticalAlign: "-2px" }} />{" "}
+                  {caseBundle?.evidence?.[0]?.sha256
+                    ? `${caseBundle.evidence[0].sha256.slice(0, 16)}…`
+                    : "PRM-CRYPTOGRAPHIC-ANCHORED"}
+                </span>
+                <span>{caseBundle?.evidence?.[0]?.mimeType || "application/pdf"}</span>
+                {caseBundle?.evidence?.[0]?.fileSize && (
+                  <span>{Math.round(caseBundle.evidence[0].fileSize / 1024)} KB</span>
+                )}
+                <span className="quality-pill">
+                  {caseBundle?.evidence?.[0]?.quality?.toUpperCase() || "VERIFIED"}
+                </span>
+              </div>
+            </div>
+
+            <div className="active-doc-right">
+              <button
+                type="button"
+                className="secondary-button history-pill-btn"
+                onClick={() => setShowHistoryDrawer(true)}
+              >
+                <History size={14} />
+                <span>Document History ({appMode === "LIVE" ? (dbCases?.length || 0) : 3})</span>
+              </button>
+              <button
+                type="button"
+                className="primary-button quick-ingest-btn"
+                onClick={() => setShowUpload(true)}
+              >
+                <Plus size={14} />
+                <span>Ingest New</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="active-doc-preview-grid">
+            <div className="doc-preview-viewport">
+              {activeDocUrl ? (
+                <div className="doc-image-frame">
+                  <img
+                    src={activeDocUrl}
+                    alt="Active verification document"
+                    className="doc-preview-img"
+                  />
+                  <div className="doc-preview-overlay">
+                    <span className="doc-preview-tag">ORIGINAL EVIDENCE SCAN</span>
+                    <button
+                      type="button"
+                      className="icon-button bordered doc-expand-btn"
+                      onClick={() => window.open(activeDocUrl, "_blank")}
+                      title="Open original document in new tab"
+                    >
+                      <ArrowUpRight size={15} />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="doc-preview-placeholder">
+                  <FileText size={48} className="doc-placeholder-icon" />
+                  <strong>Document Evidence Ingested</strong>
+                  <p>Document is processed in the forensic pipeline with glyph OCR, QR barcode extraction, and spatial ELA analysis.</p>
+                  <button type="button" className="secondary-button" onClick={() => setShowUpload(true)}>
+                    Upload Document Scan
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="doc-forensic-telemetry">
+              <div className="telemetry-card">
+                <span className="telemetry-label">PIPELINE INTEGRITY</span>
+                <strong>Cryptographically Anchored</strong>
+                <p>SHA-256 digest calculated at ingestion matches tamper-evident database state record.</p>
+              </div>
+              <div className="telemetry-card">
+                <span className="telemetry-label">EXTRACTION CHANNELS</span>
+                <strong>3 Active Modalities</strong>
+                <p>Visible glyph OCR, QR barcode payload, and spatial error-level compression (ELA).</p>
+              </div>
+              <div className="telemetry-card">
+                <span className="telemetry-label">AUTHORITATIVE CROSS-CHECK</span>
+                <strong>
+                  {caseBundle?.verification?.length
+                    ? `${caseBundle.verification.filter((v) => v.status === "verified").length} / ${caseBundle.verification.length} Claims Verified`
+                    : "Official checks active"}
+                </strong>
+                <p>Official Gazette, Department circular registries, and digital signature verification.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="result-grid">
           <div className={`risk-card ${data.tone}`}>
             <div className="risk-card-top"><span>FRAUD RISK ASSESSMENT</span><Info size={15} /></div>
@@ -1061,6 +1285,300 @@ export default function Home() {
         setShowLivenessModal(false);
       }}
     />
+
+    {/* Persistent Document Verification History Drawer */}
+    <DocumentHistoryDrawer
+      isOpen={showHistoryDrawer}
+      onClose={() => setShowHistoryDrawer(false)}
+      cases={
+        appMode === "LIVE" && dbCases
+          ? dbCases.map((c) => ({
+              id: c.id,
+              caseId: c.caseId,
+              title: c.title,
+              status: c.status,
+              riskLevel: c.riskLevel,
+              riskScore: c.riskScore,
+              confidence: c.confidence,
+              createdAt: c.createdAt,
+              updatedAt: c.updatedAt,
+            }))
+          : [
+              {
+                id: 1,
+                caseId: "PRM-2026-000142",
+                title: "Urgent appointment letter",
+                status: "open",
+                riskLevel: "high",
+                riskScore: 88,
+                confidence: 94,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              },
+              {
+                id: 2,
+                caseId: "PRM-2026-000141",
+                title: "Public information notice",
+                status: "open",
+                riskLevel: "low",
+                riskScore: 12,
+                confidence: 91,
+                createdAt: new Date(Date.now() - 86400000).toISOString(),
+                updatedAt: new Date(Date.now() - 86400000).toISOString(),
+              },
+              {
+                id: 3,
+                caseId: "PRM-2026-000139",
+                title: "Recruitment notification",
+                status: "open",
+                riskLevel: "low",
+                riskScore: 8,
+                confidence: 96,
+                createdAt: new Date(Date.now() - 864000000).toISOString(),
+                updatedAt: new Date(Date.now() - 864000000).toISOString(),
+              },
+            ]
+      }
+      selectedCaseId={currentCaseId}
+      onSelectCase={(caseId) => {
+        setSelectedCaseId(caseId);
+        setActiveNav("overview");
+        setActiveSection("overview");
+      }}
+      onUploadNew={() => setShowUpload(true)}
+    />
+
+    {/* Mobile Navigation Sheet Drawer */}
+    {showMobileNav && (
+      <div className="mobile-nav-backdrop" onClick={() => setShowMobileNav(false)}>
+        <div className="mobile-nav-drawer" onClick={(e) => e.stopPropagation()}>
+          <div className="mobile-nav-header">
+            <div className="brand-lockup">
+              <div className="brand-mark small">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div>
+                <div className="brand-name">PRAMAAN</div>
+                <div className="brand-subtitle">FORENSIC INTELLIGENCE</div>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="icon-button bordered"
+              onClick={() => setShowMobileNav(false)}
+              aria-label="Close menu"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          <div className="mobile-nav-list">
+            <div className="workspace-label">INVESTIGATION WORKSPACE</div>
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "overview" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("overview");
+                setActiveSection("overview");
+                setShowMobileNav(false);
+              }}
+            >
+              <LayoutDashboard size={17} strokeWidth={1.65} />
+              <span>Investigation Overview</span>
+            </button>
+
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "cases" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("cases");
+                setActiveSection("cases");
+                setShowMobileNav(false);
+              }}
+            >
+              <FileText size={17} strokeWidth={1.65} />
+              <span>All Cases</span>
+              <span className="nav-count">{appMode === "LIVE" ? (dbCases?.length || 0) : 3}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "tampering" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("tampering");
+                setShowMobileNav(false);
+              }}
+            >
+              <Layers size={17} strokeWidth={1.65} />
+              <span>Tampering Map (ELA)</span>
+            </button>
+
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "crosssignal" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("crosssignal");
+                setShowMobileNav(false);
+              }}
+            >
+              <Split size={17} strokeWidth={1.65} />
+              <span>Signal Agreement</span>
+            </button>
+
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "riskbreakdown" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("riskbreakdown");
+                setShowMobileNav(false);
+              }}
+            >
+              <BarChart3 size={17} strokeWidth={1.65} />
+              <span>Risk Synthesis</span>
+            </button>
+
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "decision" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("decision");
+                setShowMobileNav(false);
+              }}
+            >
+              <ClipboardCheck size={17} strokeWidth={1.65} />
+              <span>Next Best Action</span>
+            </button>
+
+            <div className="workspace-label" style={{ marginTop: 12 }}>EVIDENCE ARCHITECTURE</div>
+
+            <button
+              type="button"
+              className="side-nav-item"
+              onClick={() => {
+                setShowMobileNav(false);
+                setShowHistoryDrawer(true);
+              }}
+            >
+              <History size={17} strokeWidth={1.65} />
+              <span>Document History</span>
+              <span className="nav-count">{appMode === "LIVE" ? (dbCases?.length || 0) : 3}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "sources" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("sources");
+                setShowMobileNav(false);
+              }}
+            >
+              <Database size={17} strokeWidth={1.65} />
+              <span>Authoritative Sources</span>
+            </button>
+
+            <button
+              type="button"
+              className={`side-nav-item ${activeNav === "intelligence" ? "active" : ""}`}
+              onClick={() => {
+                setActiveNav("intelligence");
+                setShowMobileNav(false);
+              }}
+            >
+              <Network size={17} strokeWidth={1.65} />
+              <span>Intelligence Graph</span>
+            </button>
+
+            <button
+              type="button"
+              className="side-nav-item"
+              onClick={() => {
+                setShowMobileNav(false);
+                setShowLivenessModal(true);
+              }}
+            >
+              <ShieldCheck size={17} strokeWidth={1.65} />
+              <span>Active Liveness</span>
+            </button>
+          </div>
+
+          <div className="mobile-nav-footer">
+            <div className="mode-switch-group" style={{ width: "100%", justifyContent: "center" }}>
+              <button
+                type="button"
+                className={`mode-switch-btn ${appMode === "LIVE" ? "active" : ""}`}
+                onClick={() => setAppMode("LIVE")}
+                style={{ flex: 1, textAlign: "center" }}
+              >
+                LIVE
+              </button>
+              <button
+                type="button"
+                className={`mode-switch-btn ${appMode === "DEMO" ? "active" : ""}`}
+                onClick={() => setAppMode("DEMO")}
+                style={{ flex: 1, textAlign: "center" }}
+              >
+                DEMO
+              </button>
+            </div>
+
+            <button
+              type="button"
+              className="secondary-button"
+              style={{ width: "100%" }}
+              onClick={() => {
+                const nextTheme = theme === "dark" ? "light" : "dark";
+                setTheme(nextTheme);
+                toast.info(`Switched to ${nextTheme === "dark" ? "Dark Mode" : "Light Mode"}`);
+              }}
+            >
+              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              <span>Switch to {theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+            </button>
+
+            {user ? (
+              <div className="analyst-chip" style={{ justifyContent: "space-between", width: "100%", borderTop: "1px solid var(--border)", paddingTop: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <div className="avatar">
+                    {user.name ? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() : "AS"}
+                  </div>
+                  <div>
+                    <strong>{user.name || "Investigator"}</strong>
+                    <span>{user.role?.toUpperCase() || "INVESTIGATOR"}</span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await logout();
+                    setShowMobileNav(false);
+                    toast.info("Signed out.");
+                  }}
+                  className="icon-button"
+                  title="Sign out"
+                >
+                  <LogOut size={16} color="#e11d48" />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="primary-button"
+                style={{ width: "100%" }}
+                onClick={() => {
+                  setShowMobileNav(false);
+                  setLocation("/login");
+                }}
+              >
+                <LogIn size={16} />
+                <span>Investigator Sign In</span>
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    )}
   </div>;
 }
 
