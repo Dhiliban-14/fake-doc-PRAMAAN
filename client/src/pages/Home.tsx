@@ -551,7 +551,7 @@ export default function Home() {
           <div className="analyst-chip" style={{ justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
               <div className="avatar">
-                {user.name ? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() : "IN"}
+                {user.name ? user.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() : "IN"}
               </div>
               <div>
                 <strong>{user.name || "Investigator"}</strong>
@@ -640,11 +640,18 @@ export default function Home() {
             <div className="user-profile-badge">
               <button
                 type="button"
-                className="avatar top-avatar"
+                className="user-profile-btn"
                 title={`${user.name || "Investigator"} (${user.role?.toUpperCase() || "INVESTIGATOR"})`}
                 onClick={() => setShowUserMenu(!showUserMenu)}
               >
-                {user.name ? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() : "IN"}
+                <div className="avatar top-avatar">
+                  {user.name ? user.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() : "IN"}
+                </div>
+                <div className="user-profile-text">
+                  <strong>{user.name || "Investigator"}</strong>
+                  <span className="role-tag-sm">{user.role?.toUpperCase() || "INVESTIGATOR"}</span>
+                </div>
+                <ChevronDown size={14} className="user-chevron" />
               </button>
               {showUserMenu && (
                 <div className="user-dropdown-menu">
@@ -1541,7 +1548,7 @@ export default function Home() {
               <div className="analyst-chip" style={{ justifyContent: "space-between", width: "100%", borderTop: "1px solid var(--border)", paddingTop: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
                   <div className="avatar">
-                    {user.name ? user.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() : "AS"}
+                    {user.name ? user.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() : "AS"}
                   </div>
                   <div>
                     <strong>{user.name || "Investigator"}</strong>

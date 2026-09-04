@@ -44,6 +44,10 @@ export function useAuth(options?: UseAuthOptions) {
       // backend cookie is cleared by the logout mutation.
       try {
         sessionStorage.removeItem("manus-cookie");
+        sessionStorage.removeItem("manus-token");
+        localStorage.removeItem("manus-cookie");
+        localStorage.removeItem("manus-token");
+        localStorage.removeItem("manus-runtime-user-info");
       } catch {}
       utils.auth.me.setData(undefined, null);
       await utils.auth.me.invalidate();
@@ -51,15 +55,25 @@ export function useAuth(options?: UseAuthOptions) {
   }, [logoutMutation, utils]);
 
   const state = useMemo(() => {
-    localStorage.setItem(
-      "manus-runtime-user-info",
-      JSON.stringify(meQuery.data)
-    );
+    let fallbackUser = null;
+    try {
+      const stored = localStorage.getItem("manus-runtime-user-info");
+      if (stored && stored !== "null" && stored !== "undefined") {
+        fallbackUser = JSON.parse(stored);
+      }
+    } catch {}
+
+    const currentUser = meQuery.data ?? (meQuery.isLoading || localStorage.getItem("manus-token") ? fallbackUser : null);
+
+    if (meQuery.data) {
+      localStorage.setItem("manus-runtime-user-info", JSON.stringify(meQuery.data));
+    }
+
     return {
-      user: meQuery.data ?? null,
+      user: currentUser,
       loading: meQuery.isLoading || logoutMutation.isPending,
       error: meQuery.error ?? logoutMutation.error ?? null,
-      isAuthenticated: Boolean(meQuery.data),
+      isAuthenticated: Boolean(currentUser),
     };
   }, [
     meQuery.data,

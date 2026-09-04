@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -32,10 +32,18 @@ export default function Login() {
     onSuccess: async (data) => {
       if (data.token) {
         try {
+          localStorage.setItem("manus-token", data.token);
+          localStorage.setItem("manus-cookie", `${COOKIE_NAME}=${data.token}`);
           sessionStorage.setItem("manus-cookie", `${COOKIE_NAME}=${data.token}`);
+          sessionStorage.setItem("manus-token", data.token);
+          if (data.user) {
+            localStorage.setItem("manus-runtime-user-info", JSON.stringify(data.user));
+          }
         } catch {}
       }
+      utils.auth.me.setData(undefined, data.user as any);
       await utils.auth.me.invalidate();
+      await utils.auth.me.refetch();
       toast.success(`Welcome back, ${data.user?.name || "Investigator"}`, {
         description: "Authenticated with secure session token.",
       });

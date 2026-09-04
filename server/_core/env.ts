@@ -1,5 +1,5 @@
 export const ENV = {
-  appId: process.env.VITE_APP_ID ?? "",
+  appId: process.env.VITE_APP_ID || "pramaan-forensics-app",
   cookieSecret: process.env.JWT_SECRET || "pramaan-forensic-jwt-secret-key-production-anchor-2026",
   databaseUrl: process.env.DATABASE_URL ?? "",
   oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
