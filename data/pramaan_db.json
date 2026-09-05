@@ -18,14 +18,400 @@
       "email": "investigator@pramaan.gov.in",
       "loginMethod": "credentials",
       "role": "admin",
-      "lastSignedIn": "2026-09-04T07:01:34.639Z",
+      "lastSignedIn": "2026-09-05T04:21:14.170Z",
       "createdAt": "2026-08-31T07:01:33.114Z",
-      "updatedAt": "2026-09-04T07:01:34.639Z"
+      "updatedAt": "2026-09-05T04:21:14.170Z"
     }
   ],
-  "cases": [],
-  "evidence": [],
-  "ocrResults": [],
+  "cases": [
+    {
+      "id": 1,
+      "caseId": "PRM-2026-864572",
+      "title": "US Visa Document Screening (Milan Molinas Alvaro)",
+      "status": "in_review",
+      "riskLevel": "low",
+      "riskScore": 32,
+      "confidence": 92,
+      "completeness": 56,
+      "ownerId": 1,
+      "createdAt": "2026-09-05T04:20:54.754Z",
+      "updatedAt": "2026-09-05T04:20:55.237Z"
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "evidenceId": "EV-NVKPYG-S5C3",
+      "caseId": 1,
+      "originalName": "us_visa_milan_molinas.jpg",
+      "storageKey": "evidence/visa_1788582054755.jpg",
+      "mimeType": "image/jpeg",
+      "sha256": "aab51cb96af992d774e885108a04df1ebd09714ea8c62dea641c2fb6ef14537c",
+      "recordHash": "0326489b0b8fbcd691ae3b81e4e99d92dc0da18811a6f73383d1468b65d6a894",
+      "fileSize": 45250,
+      "width": null,
+      "height": null,
+      "pageCount": null,
+      "quality": "good",
+      "ocrReliability": "high",
+      "forensicReliability": "inconclusive",
+      "uploadedAt": "2026-09-05T04:20:54.760Z",
+      "immutableAt": "2026-09-05T04:20:54.760Z"
+    }
+  ],
+  "ocrResults": [
+    {
+      "id": 1,
+      "evidenceId": 9999,
+      "fullText": "",
+      "blocks": [],
+      "headings": [],
+      "tables": [],
+      "averageConfidence": 0,
+      "createdAt": "2026-09-05T04:18:48.213Z"
+    },
+    {
+      "id": 2,
+      "evidenceId": 1,
+      "fullText": "[Text Region 1 (263x62px)]\n[Text Region 2 (25x21px)]\n[Text Region 3 (11x13px)]\n[Text Region 4 (14x17px)]\n[Text Region 5 (14x17px)]\n[Text Region 6 (121x49px)]\n[Text Region 7 (43x36px)]\n[Text Region 8 (22x19px)]\n[Text Region 9 (43x41px)]\n[Text Region 10 (51x45px)]\n[Text Region 11 (22x21px)]\n[Text Region 12 (26x20px)]\n[Text Region 13 (20x20px)]\n[Text Region 14 (22x12px)]\n[Text Region 15 (121x16px)]\n[Text Region 16 (15x12px)]\n[Text Region 17 (23x13px)]\n[Text Region 18 (81x17px)]\n[Text Region 19 (16x12px)]\n[Text Region 20 (53x14px)]\n[Text Region 21 (55x25px)]\n[Text Region 22 (81x14px)]\n[Text Region 23 (15x11px)]\n[Text Region 24 (75x19px)]\n[Text Region 25 (83x17px)]\n[Text Region 26 (41x20px)]\n[Text Region 27 (103x21px)]",
+      "blocks": [
+        {
+          "id": "blk-1",
+          "text": "[Text Region 1 (263x62px)]",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 263,
+            "height": 62
+          },
+          "confidence": 96,
+          "type": "heading"
+        },
+        {
+          "id": "blk-2",
+          "text": "[Text Region 2 (25x21px)]",
+          "bbox": {
+            "x": 215,
+            "y": 5,
+            "width": 25,
+            "height": 21
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-3",
+          "text": "[Text Region 3 (11x13px)]",
+          "bbox": {
+            "x": 238,
+            "y": 14,
+            "width": 11,
+            "height": 13
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-4",
+          "text": "[Text Region 4 (14x17px)]",
+          "bbox": {
+            "x": 250,
+            "y": 10,
+            "width": 14,
+            "height": 17
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-5",
+          "text": "[Text Region 5 (14x17px)]",
+          "bbox": {
+            "x": 262,
+            "y": 10,
+            "width": 14,
+            "height": 17
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-6",
+          "text": "[Text Region 6 (121x49px)]",
+          "bbox": {
+            "x": 274,
+            "y": 10,
+            "width": 121,
+            "height": 49
+          },
+          "confidence": 96,
+          "type": "heading"
+        },
+        {
+          "id": "blk-7",
+          "text": "[Text Region 7 (43x36px)]",
+          "bbox": {
+            "x": 321,
+            "y": 13,
+            "width": 43,
+            "height": 36
+          },
+          "confidence": 96,
+          "type": "heading"
+        },
+        {
+          "id": "blk-8",
+          "text": "[Text Region 8 (22x19px)]",
+          "bbox": {
+            "x": 349,
+            "y": 8,
+            "width": 22,
+            "height": 19
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-9",
+          "text": "[Text Region 9 (43x41px)]",
+          "bbox": {
+            "x": 408,
+            "y": 12,
+            "width": 43,
+            "height": 41
+          },
+          "confidence": 96,
+          "type": "heading"
+        },
+        {
+          "id": "blk-10",
+          "text": "[Text Region 10 (51x45px)]",
+          "bbox": {
+            "x": 433,
+            "y": 1,
+            "width": 51,
+            "height": 45
+          },
+          "confidence": 96,
+          "type": "heading"
+        },
+        {
+          "id": "blk-11",
+          "text": "[Text Region 11 (22x21px)]",
+          "bbox": {
+            "x": 299,
+            "y": 28,
+            "width": 22,
+            "height": 21
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-12",
+          "text": "[Text Region 12 (26x20px)]",
+          "bbox": {
+            "x": 365,
+            "y": 20,
+            "width": 26,
+            "height": 20
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-13",
+          "text": "[Text Region 13 (20x20px)]",
+          "bbox": {
+            "x": 396,
+            "y": 29,
+            "width": 20,
+            "height": 20
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-14",
+          "text": "[Text Region 14 (22x12px)]",
+          "bbox": {
+            "x": 171,
+            "y": 77,
+            "width": 22,
+            "height": 12
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-15",
+          "text": "[Text Region 15 (121x16px)]",
+          "bbox": {
+            "x": 369,
+            "y": 75,
+            "width": 121,
+            "height": 16
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-16",
+          "text": "[Text Region 16 (15x12px)]",
+          "bbox": {
+            "x": 155,
+            "y": 107,
+            "width": 15,
+            "height": 12
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-17",
+          "text": "[Text Region 17 (23x13px)]",
+          "bbox": {
+            "x": 187,
+            "y": 107,
+            "width": 23,
+            "height": 13
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-18",
+          "text": "[Text Region 18 (81x17px)]",
+          "bbox": {
+            "x": 217,
+            "y": 105,
+            "width": 81,
+            "height": 17
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-19",
+          "text": "[Text Region 19 (16x12px)]",
+          "bbox": {
+            "x": 179,
+            "y": 139,
+            "width": 16,
+            "height": 12
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-20",
+          "text": "[Text Region 20 (53x14px)]",
+          "bbox": {
+            "x": 210,
+            "y": 138,
+            "width": 53,
+            "height": 14
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-21",
+          "text": "[Text Region 21 (55x25px)]",
+          "bbox": {
+            "x": 153,
+            "y": 159,
+            "width": 55,
+            "height": 25
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-22",
+          "text": "[Text Region 22 (81x14px)]",
+          "bbox": {
+            "x": 356,
+            "y": 171,
+            "width": 81,
+            "height": 14
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-23",
+          "text": "[Text Region 23 (15x11px)]",
+          "bbox": {
+            "x": 476,
+            "y": 172,
+            "width": 15,
+            "height": 11
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-24",
+          "text": "[Text Region 24 (75x19px)]",
+          "bbox": {
+            "x": 252,
+            "y": 202,
+            "width": 75,
+            "height": 19
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-25",
+          "text": "[Text Region 25 (83x17px)]",
+          "bbox": {
+            "x": 364,
+            "y": 205,
+            "width": 83,
+            "height": 17
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-26",
+          "text": "[Text Region 26 (41x20px)]",
+          "bbox": {
+            "x": 494,
+            "y": 204,
+            "width": 41,
+            "height": 20
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        },
+        {
+          "id": "blk-27",
+          "text": "[Text Region 27 (103x21px)]",
+          "bbox": {
+            "x": 424,
+            "y": 256,
+            "width": 103,
+            "height": 21
+          },
+          "confidence": 96,
+          "type": "paragraph"
+        }
+      ],
+      "headings": [
+        "[Text Region 1 (263x62px)]",
+        "[Text Region 6 (121x49px)]",
+        "[Text Region 7 (43x36px)]",
+        "[Text Region 9 (43x41px)]",
+        "[Text Region 10 (51x45px)]"
+      ],
+      "tables": [],
+      "averageConfidence": 96,
+      "createdAt": "2026-09-05T04:20:54.949Z"
+    }
+  ],
   "claims": [],
   "sourceRegistry": [
     {
@@ -101,7 +487,63 @@
     }
   ],
   "verificationResults": [],
-  "forensicResults": [],
+  "forensicResults": [
+    {
+      "id": 1,
+      "evidenceId": 9999,
+      "detector": "Forensic Pipeline",
+      "finding": "Evidence file not accessible for analysis.",
+      "strength": "not_available",
+      "confidence": 0,
+      "reliability": "inconclusive",
+      "limitations": "File missing on storage path.",
+      "createdAt": "2026-09-05T04:18:48.215Z"
+    },
+    {
+      "id": 2,
+      "evidenceId": 1,
+      "detector": "Metadata & Software Signatures",
+      "finding": "No editing software signatures or abnormal timestamp revisions identified.",
+      "strength": "low",
+      "confidence": 82,
+      "reliability": "medium",
+      "limitations": "Stripped metadata is standard across messaging apps (WhatsApp, Telegram) and web downloads.",
+      "createdAt": "2026-09-05T04:20:55.231Z"
+    },
+    {
+      "id": 3,
+      "evidenceId": 1,
+      "detector": "JPEG Compression & ELA",
+      "finding": "Compression artifact levels are uniform across the document grid (ELA std: 0.8954).",
+      "strength": "low",
+      "confidence": 84,
+      "reliability": "high",
+      "limitations": "Re-saving a spliced image at low quality can homogenize ELA levels.",
+      "createdAt": "2026-09-05T04:20:55.231Z"
+    },
+    {
+      "id": 4,
+      "evidenceId": 1,
+      "detector": "Noise Inconsistency & Texture",
+      "finding": "Natural optical noise distribution confirmed (variance: 2509.23).",
+      "strength": "low",
+      "confidence": 85,
+      "reliability": "high",
+      "limitations": "Camera sensors and scanners have distinct baseline noise signatures.",
+      "createdAt": "2026-09-05T04:20:55.231Z"
+    },
+    {
+      "id": 5,
+      "evidenceId": 1,
+      "detector": "Layout Baseline Alignment",
+      "finding": "Text line baselines and vertical alignments evaluated; no gross geometric shear detected.",
+      "strength": "low",
+      "confidence": 85,
+      "reliability": "medium",
+      "limitations": "Document resolution and scanner tilt can introduce benign skew.",
+      "createdAt": "2026-09-05T04:20:55.231Z"
+    }
+  ],
   "entities": [],
   "entityRelationships": [],
   "documentFingerprints": [
@@ -126,36 +568,914 @@
       "templateDna": "T-LAYOUT",
       "entityDna": "ent-none",
       "createdAt": "2026-08-29T08:51:09.187Z"
+    },
+    {
+      "id": 3,
+      "evidenceId": 9999,
+      "fileDna": "b5a2c96250612366ea272ffac6d9744aaf4b45aacd96aa7cfcb931ee3b558259",
+      "visualDna": "pHash-275876e3",
+      "perceptualHash": "275876e34cf609db118f3d84b799a790",
+      "ocrTextDna": "0000000000000000",
+      "layoutDna": "layout-none",
+      "templateDna": "T-LAYOUT",
+      "entityDna": "ent-none",
+      "createdAt": "2026-09-05T04:18:48.216Z"
+    },
+    {
+      "id": 4,
+      "evidenceId": 1,
+      "fileDna": "aab51cb96af992d774e885108a04df1ebd09714ea8c62dea641c2fb6ef14537c",
+      "visualDna": "pHash-5ff05997",
+      "perceptualHash": "5ff05997a15209625e6efa0fc1432aac",
+      "ocrTextDna": "00aa041608f80d4c108f17961ab11ca3",
+      "layoutDna": "af1e495f4456fa4f",
+      "templateDna": "T-AF1E49",
+      "entityDna": "ent-none",
+      "createdAt": "2026-09-05T04:20:55.233Z"
     }
   ],
-  "relatedCases": [],
-  "timelineEvents": [],
-  "investigatorFindings": [],
+  "relatedCases": [
+    {
+      "id": 1,
+      "sourceCaseId": 9999,
+      "relatedCaseId": 9999,
+      "similarityType": "Template & Layout Match",
+      "similarityScore": 100,
+      "evidenceReference": "EV-undefined",
+      "createdAt": "2026-09-05T04:18:48.217Z"
+    },
+    {
+      "id": 2,
+      "sourceCaseId": 9999,
+      "relatedCaseId": 9999,
+      "similarityType": "Template & Layout Match",
+      "similarityScore": 100,
+      "evidenceReference": "EV-undefined",
+      "createdAt": "2026-09-05T04:18:48.217Z"
+    }
+  ],
+  "timelineEvents": [
+    {
+      "id": 1,
+      "caseId": 9999,
+      "eventType": "quality_assessed",
+      "detail": "Evidence intake quality evaluated: POOR; average confidence 0%.",
+      "evidenceReference": null,
+      "previousHash": null,
+      "recordHash": "d84e9f55c809affc57e2180b899194cee004954916b8ba1556d923488a87e3d1",
+      "occurredAt": "2026-09-05T04:18:48.212Z",
+      "immutableAt": "2026-09-05T04:18:48.212Z"
+    },
+    {
+      "id": 2,
+      "caseId": 9999,
+      "eventType": "ocr_completed",
+      "detail": "Extracted 0 text blocks; detected language: unknown.",
+      "evidenceReference": null,
+      "previousHash": "d84e9f55c809affc57e2180b899194cee004954916b8ba1556d923488a87e3d1",
+      "recordHash": "312e586403aa5d7403ef8f8b76e270e922060d06bc8e3e6ea0c1dbe6bddcdaf7",
+      "occurredAt": "2026-09-05T04:18:48.213Z",
+      "immutableAt": "2026-09-05T04:18:48.213Z"
+    },
+    {
+      "id": 3,
+      "caseId": 9999,
+      "eventType": "claims_extracted",
+      "detail": "Extracted 0 structured claims (organization, notification number, dates, URLs, payment IDs).",
+      "evidenceReference": null,
+      "previousHash": "312e586403aa5d7403ef8f8b76e270e922060d06bc8e3e6ea0c1dbe6bddcdaf7",
+      "recordHash": "5d80a2fa04378918ef4b987149ecd7f59c054105271fac5f4cb36815c5cd6676",
+      "occurredAt": "2026-09-05T04:18:48.214Z",
+      "immutableAt": "2026-09-05T04:18:48.214Z"
+    },
+    {
+      "id": 4,
+      "caseId": 9999,
+      "eventType": "source_verified",
+      "detail": "Claim verification complete: 0 verified, 0 contradicted against authoritative registry.",
+      "evidenceReference": null,
+      "previousHash": "5d80a2fa04378918ef4b987149ecd7f59c054105271fac5f4cb36815c5cd6676",
+      "recordHash": "f3ce739a2789038dfd5b0f200077100ddbb699580652015ee74c3ec408812572",
+      "occurredAt": "2026-09-05T04:18:48.214Z",
+      "immutableAt": "2026-09-05T04:18:48.214Z"
+    },
+    {
+      "id": 5,
+      "caseId": 9999,
+      "eventType": "forensics_completed",
+      "detail": "Forensic suite completed (ELA heatmap rendered, 0 tampering region(s) localized).",
+      "evidenceReference": null,
+      "previousHash": "f3ce739a2789038dfd5b0f200077100ddbb699580652015ee74c3ec408812572",
+      "recordHash": "b5dada16f5ce87860889cd7e284f774f60b87add34c531c78dfaa5ec5d176af5",
+      "occurredAt": "2026-09-05T04:18:48.216Z",
+      "immutableAt": "2026-09-05T04:18:48.216Z"
+    },
+    {
+      "id": 6,
+      "caseId": 9999,
+      "eventType": "dna_generated",
+      "detail": "Document DNA synthesized (SHA-256 anchored, pHash pHash-275876e3, Template T-LAYOUT). Found 2 related cases.",
+      "evidenceReference": null,
+      "previousHash": "b5dada16f5ce87860889cd7e284f774f60b87add34c531c78dfaa5ec5d176af5",
+      "recordHash": "62ee485f753a167ff3a0314ab028ca0b2effb59067487b560f4b74b9e2e6b2b7",
+      "occurredAt": "2026-09-05T04:18:48.217Z",
+      "immutableAt": "2026-09-05T04:18:48.217Z"
+    },
+    {
+      "id": 7,
+      "caseId": 9999,
+      "eventType": "relationships_detected",
+      "detail": "Intelligence graph updated with 0 normalized entities and tokenized Identity DNA.",
+      "evidenceReference": null,
+      "previousHash": "62ee485f753a167ff3a0314ab028ca0b2effb59067487b560f4b74b9e2e6b2b7",
+      "recordHash": "854dc441e568207e1a292e30c04a3610d3bfea85c469075368dd0d0c314a4a7a",
+      "occurredAt": "2026-09-05T04:18:48.219Z",
+      "immutableAt": "2026-09-05T04:18:48.219Z"
+    },
+    {
+      "id": 8,
+      "caseId": 9999,
+      "eventType": "risk_assessed",
+      "detail": "Explainable 10-component risk calculated: VERY_LOW (8/100, confidence 92%).",
+      "evidenceReference": null,
+      "previousHash": "854dc441e568207e1a292e30c04a3610d3bfea85c469075368dd0d0c314a4a7a",
+      "recordHash": "57d8b8ba9cc8cf6b74e18c328815adc49d9e419d87007198e1fc8dea9d383e3c",
+      "occurredAt": "2026-09-05T04:18:48.221Z",
+      "immutableAt": "2026-09-05T04:18:48.221Z"
+    },
+    {
+      "id": 9,
+      "caseId": 9999,
+      "eventType": "investigator_completed",
+      "detail": "Evidence-bound findings synthesis compiled with formal citations and operational limitations.",
+      "evidenceReference": null,
+      "previousHash": "57d8b8ba9cc8cf6b74e18c328815adc49d9e419d87007198e1fc8dea9d383e3c",
+      "recordHash": "288f661fe7a3fb2f888a4183260afbfe8084fa95a2b6b3b7a83d0ad08f5fe485",
+      "occurredAt": "2026-09-05T04:18:48.222Z",
+      "immutableAt": "2026-09-05T04:18:48.222Z"
+    },
+    {
+      "id": 10,
+      "caseId": 9999,
+      "eventType": "report_generated",
+      "detail": "Comprehensive forensic audit report ready for export.",
+      "evidenceReference": null,
+      "previousHash": "288f661fe7a3fb2f888a4183260afbfe8084fa95a2b6b3b7a83d0ad08f5fe485",
+      "recordHash": "c4ffa5d780ddadad89ec42f7d3de355810fbb95baf8112aab2350f204024e5c9",
+      "occurredAt": "2026-09-05T04:18:48.222Z",
+      "immutableAt": "2026-09-05T04:18:48.222Z"
+    },
+    {
+      "id": 11,
+      "caseId": 1,
+      "eventType": "quality_assessed",
+      "detail": "Evidence intake quality evaluated: GOOD; average confidence 96%.",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": null,
+      "recordHash": "3d9dec1b36f11fb6b2862adda1e63a699dd7250e91bc5b2811df5a67bd28886f",
+      "occurredAt": "2026-09-05T04:20:54.948Z",
+      "immutableAt": "2026-09-05T04:20:54.948Z"
+    },
+    {
+      "id": 12,
+      "caseId": 1,
+      "eventType": "ocr_completed",
+      "detail": "Extracted 27 text blocks; detected language: en.",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "3d9dec1b36f11fb6b2862adda1e63a699dd7250e91bc5b2811df5a67bd28886f",
+      "recordHash": "d4cf3da43acf000d3cd2f3c173e09347240f4b0f175c9d49fb4ef2b8da1a0db5",
+      "occurredAt": "2026-09-05T04:20:54.949Z",
+      "immutableAt": "2026-09-05T04:20:54.949Z"
+    },
+    {
+      "id": 13,
+      "caseId": 1,
+      "eventType": "claims_extracted",
+      "detail": "Extracted 0 structured claims (organization, notification number, dates, URLs, payment IDs).",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "d4cf3da43acf000d3cd2f3c173e09347240f4b0f175c9d49fb4ef2b8da1a0db5",
+      "recordHash": "11c13e05556fe72ded86aa2b89781ff55280948b3bbec262a0ed37a5d523e36c",
+      "occurredAt": "2026-09-05T04:20:54.951Z",
+      "immutableAt": "2026-09-05T04:20:54.951Z"
+    },
+    {
+      "id": 14,
+      "caseId": 1,
+      "eventType": "source_verified",
+      "detail": "Claim verification complete: 0 verified, 0 contradicted against authoritative registry.",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "11c13e05556fe72ded86aa2b89781ff55280948b3bbec262a0ed37a5d523e36c",
+      "recordHash": "347d6da036ba45fdb4501559f474c43b62cc5af299e69d1861b14c2825a54b66",
+      "occurredAt": "2026-09-05T04:20:54.951Z",
+      "immutableAt": "2026-09-05T04:20:54.951Z"
+    },
+    {
+      "id": 15,
+      "caseId": 1,
+      "eventType": "forensics_completed",
+      "detail": "Forensic suite completed (ELA heatmap rendered, 1 tampering region(s) localized).",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "347d6da036ba45fdb4501559f474c43b62cc5af299e69d1861b14c2825a54b66",
+      "recordHash": "18f807235a25c74e7e4f2c29f11c7be8f9ada922369cbae3d7e5bc533959ea0d",
+      "occurredAt": "2026-09-05T04:20:55.232Z",
+      "immutableAt": "2026-09-05T04:20:55.232Z"
+    },
+    {
+      "id": 16,
+      "caseId": 1,
+      "eventType": "dna_generated",
+      "detail": "Document DNA synthesized (SHA-256 anchored, pHash pHash-5ff05997, Template T-AF1E49). Found 0 related cases.",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "18f807235a25c74e7e4f2c29f11c7be8f9ada922369cbae3d7e5bc533959ea0d",
+      "recordHash": "c25e9c5ed7ea7ebb68764c1e4cb1b3f6b00afeff9a1bbeb359e2ede947c96fa3",
+      "occurredAt": "2026-09-05T04:20:55.234Z",
+      "immutableAt": "2026-09-05T04:20:55.234Z"
+    },
+    {
+      "id": 17,
+      "caseId": 1,
+      "eventType": "relationships_detected",
+      "detail": "Intelligence graph updated with 0 normalized entities and tokenized Identity DNA.",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "c25e9c5ed7ea7ebb68764c1e4cb1b3f6b00afeff9a1bbeb359e2ede947c96fa3",
+      "recordHash": "2fcca2f5b6f0b00460d0e61e6a59e32a0b21a07cd5a5f23acb04ce0700605b3f",
+      "occurredAt": "2026-09-05T04:20:55.235Z",
+      "immutableAt": "2026-09-05T04:20:55.235Z"
+    },
+    {
+      "id": 18,
+      "caseId": 1,
+      "eventType": "risk_assessed",
+      "detail": "Explainable 10-component risk calculated: LOW (32/100, confidence 92%).",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "2fcca2f5b6f0b00460d0e61e6a59e32a0b21a07cd5a5f23acb04ce0700605b3f",
+      "recordHash": "7005bc3f31bd566972faa3ae39a7d084d8fb7e9f92a72ea240f8e522ce1db42a",
+      "occurredAt": "2026-09-05T04:20:55.238Z",
+      "immutableAt": "2026-09-05T04:20:55.238Z"
+    },
+    {
+      "id": 19,
+      "caseId": 1,
+      "eventType": "investigator_completed",
+      "detail": "Evidence-bound findings synthesis compiled with formal citations and operational limitations.",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "7005bc3f31bd566972faa3ae39a7d084d8fb7e9f92a72ea240f8e522ce1db42a",
+      "recordHash": "b16e2a667f1ef29af9f1de3bfa074c63118cde6e7ebe18fa44d00a3a1ec8c419",
+      "occurredAt": "2026-09-05T04:20:55.239Z",
+      "immutableAt": "2026-09-05T04:20:55.239Z"
+    },
+    {
+      "id": 20,
+      "caseId": 1,
+      "eventType": "report_generated",
+      "detail": "Comprehensive forensic audit report ready for export.",
+      "evidenceReference": "EV-NVKPYG-S5C3",
+      "previousHash": "b16e2a667f1ef29af9f1de3bfa074c63118cde6e7ebe18fa44d00a3a1ec8c419",
+      "recordHash": "4a55b50a3d6612c1cb615adce1136efad42ec1221e3b6ec311341d209d14ff2a",
+      "occurredAt": "2026-09-05T04:20:55.240Z",
+      "immutableAt": "2026-09-05T04:20:55.240Z"
+    }
+  ],
+  "investigatorFindings": [
+    {
+      "id": 1,
+      "caseId": 9999,
+      "summary": "Assessment is inconclusive due to limited document resolution, unextractable text, or incomplete verification coverage.",
+      "evidenceReferences": [
+        null,
+        "EV-undefined"
+      ],
+      "limitations": "This assessment is evidence-backed based on extracted claims, metadata, and authoritative registry comparison. It is an investigatory tool and does not constitute a judicial certificate of authenticity.",
+      "recommendedAction": "Retain original document file in case repository. Corroborate candidate identity parameters against primary registration records.",
+      "createdAt": "2026-09-05T04:18:48.222Z"
+    },
+    {
+      "id": 2,
+      "caseId": 1,
+      "summary": "Extracted notification parameters and web endpoints match published authoritative registers. No significant digital tampering or contradictory claims detected.",
+      "evidenceReferences": [
+        "EV-NVKPYG-S5C3"
+      ],
+      "limitations": "This assessment is evidence-backed based on extracted claims, metadata, and authoritative registry comparison. It is an investigatory tool and does not constitute a judicial certificate of authenticity.",
+      "recommendedAction": "Retain original document file in case repository. Corroborate candidate identity parameters against primary registration records.",
+      "createdAt": "2026-09-05T04:20:55.239Z"
+    }
+  ],
   "caseNotes": [],
   "reports": [],
   "counters": {
     "users": 2,
-    "cases": 0,
-    "evidence": 0,
-    "ocrResults": 0,
+    "cases": 1,
+    "evidence": 1,
+    "ocrResults": 2,
     "claims": 0,
     "sourceRegistry": 4,
     "verificationResults": 0,
-    "forensicResults": 0,
+    "forensicResults": 5,
     "entities": 0,
     "entityRelationships": 0,
-    "documentFingerprints": 2,
-    "relatedCases": 0,
-    "timelineEvents": 0,
-    "investigatorFindings": 0,
+    "documentFingerprints": 4,
+    "relatedCases": 2,
+    "timelineEvents": 20,
+    "investigatorFindings": 2,
     "caseNotes": 0,
     "reports": 0
   },
-  "tamperingMaps": [],
-  "identityDna": [],
-  "contradictions": [],
-  "riskBreakdowns": [],
-  "decisionGuidance": [],
+  "tamperingMaps": [
+    {
+      "caseId": 9999,
+      "evidenceId": 9999,
+      "success": true,
+      "dimensions": {
+        "width": 800,
+        "height": 600
+      },
+      "quality": {
+        "laplacianBlurScore": 120,
+        "isBlurry": false,
+        "glareRatio": 0.01,
+        "overallQuality": "usable"
+      },
+      "ela": {
+        "meanError": 4.2,
+        "stdError": 2.1,
+        "anomalousRatio": 0.005,
+        "isCompressionConsistent": true,
+        "heatmapPath": null
+      },
+      "tamperingRegions": [],
+      "noiseAnalysis": {
+        "anomalousPatchCount": 0,
+        "isNoiseUniform": true
+      },
+      "copyMove": {
+        "clonedClusters": 0,
+        "clonedPairs": []
+      },
+      "fontAlignment": {
+        "baselineShiftCount": 0,
+        "isAlignmentConsistent": true
+      },
+      "securityFeatures": {
+        "qr": {
+          "detected": false,
+          "payload": null,
+          "points": null
+        }
+      },
+      "savedAt": "2026-09-05T04:18:48.215Z"
+    },
+    {
+      "caseId": 1,
+      "evidenceId": 1,
+      "success": true,
+      "dimensions": {
+        "width": 554,
+        "height": 361
+      },
+      "quality": {
+        "laplacianBlurScore": 2509.23,
+        "isBlurry": false,
+        "glareRatio": 0.0059,
+        "overallQuality": "good"
+      },
+      "ela": {
+        "meanError": 0.74,
+        "stdError": 1.05,
+        "anomalousRatio": 0.0231,
+        "isCompressionConsistent": true,
+        "heatmapPath": "/uploads/heatmaps/visa_1788582054755_ela.jpg"
+      },
+      "tamperingRegions": [
+        {
+          "regionIndex": 1,
+          "anomalyType": "ela_compression_anomaly",
+          "severity": "medium",
+          "probability": 0.45,
+          "confidence": 0.6,
+          "bbox": {
+            "x": 0.8502,
+            "y": 0,
+            "w": 0.0596,
+            "h": 0.0499
+          },
+          "whyFlagged": "Compression quantization error deviates by >3σ (local error: 3.2 vs background 0.74).",
+          "supportingSignals": [
+            "High-frequency localized DCT mismatch",
+            "Layered resave artifact"
+          ],
+          "alternativeExplanations": [
+            "Localized image re-compression",
+            "Repeated sticker / seal scan overlay"
+          ],
+          "detectorModel": "OpenCV-ELA-v2.1"
+        }
+      ],
+      "noiseAnalysis": {
+        "anomalousPatchCount": 5,
+        "isNoiseUniform": false
+      },
+      "copyMove": {
+        "clonedClusters": 21,
+        "clonedPairs": [
+          {
+            "p1": [
+              0.282,
+              0.4714
+            ],
+            "p2": [
+              0.461,
+              0.5702
+            ],
+            "distance": 105.4
+          },
+          {
+            "p1": [
+              0.2842,
+              0.5773
+            ],
+            "p2": [
+              0.5766,
+              0.5044
+            ],
+            "distance": 164.1
+          },
+          {
+            "p1": [
+              0.2842,
+              0.5773
+            ],
+            "p2": [
+              0.5766,
+              0.5044
+            ],
+            "distance": 164.1
+          },
+          {
+            "p1": [
+              0.2865,
+              0.3885
+            ],
+            "p2": [
+              0.3285,
+              0.218
+            ],
+            "distance": 65.8
+          },
+          {
+            "p1": [
+              0.2865,
+              0.3885
+            ],
+            "p2": [
+              0.3285,
+              0.218
+            ],
+            "distance": 65.8
+          },
+          {
+            "p1": [
+              0.3377,
+              0.353
+            ],
+            "p2": [
+              0.3925,
+              0.1787
+            ],
+            "distance": 69.9
+          },
+          {
+            "p1": [
+              0.3377,
+              0.353
+            ],
+            "p2": [
+              0.3925,
+              0.1787
+            ],
+            "distance": 69.9
+          },
+          {
+            "p1": [
+              0.3925,
+              0.1787
+            ],
+            "p2": [
+              0.3377,
+              0.353
+            ],
+            "distance": 69.9
+          },
+          {
+            "p1": [
+              0.3925,
+              0.1787
+            ],
+            "p2": [
+              0.3377,
+              0.353
+            ],
+            "distance": 69.9
+          },
+          {
+            "p1": [
+              0.461,
+              0.5702
+            ],
+            "p2": [
+              0.282,
+              0.4714
+            ],
+            "distance": 105.4
+          }
+        ]
+      },
+      "fontAlignment": {
+        "baselineShiftCount": 13,
+        "isAlignmentConsistent": false
+      },
+      "securityFeatures": {
+        "qr": {
+          "detected": false,
+          "payload": null,
+          "points": [
+            [
+              [
+                508,
+                145
+              ],
+              [
+                337,
+                275
+              ],
+              [
+                214.14285278320312,
+                7
+              ],
+              [
+                387,
+                8
+              ]
+            ]
+          ]
+        }
+      },
+      "savedAt": "2026-09-05T04:20:55.231Z"
+    }
+  ],
+  "identityDna": [
+    {
+      "caseId": 9999,
+      "tokenizedName": "d7e8ddc82b710fd1a2548a388b307ba0356046a2c993764c2e587cc53379af12",
+      "tokenizedDob": "d7e8ddc82b710fd1a2548a388b307ba0356046a2c993764c2e587cc53379af12",
+      "tokenizedIdNumber": "d7e8ddc82b710fd1a2548a388b307ba0356046a2c993764c2e587cc53379af12",
+      "tokenizedPhone": null,
+      "tokenizedUpi": null,
+      "maskedName": "U***D",
+      "maskedIdNumber": "U***D",
+      "maskedPhone": null,
+      "maskedUpi": null,
+      "recurrentAssociations": [],
+      "savedAt": "2026-09-05T04:18:48.218Z"
+    },
+    {
+      "caseId": 1,
+      "tokenizedName": "d7e8ddc82b710fd1a2548a388b307ba0356046a2c993764c2e587cc53379af12",
+      "tokenizedDob": "d7e8ddc82b710fd1a2548a388b307ba0356046a2c993764c2e587cc53379af12",
+      "tokenizedIdNumber": "d7e8ddc82b710fd1a2548a388b307ba0356046a2c993764c2e587cc53379af12",
+      "tokenizedPhone": null,
+      "tokenizedUpi": null,
+      "maskedName": "U***D",
+      "maskedIdNumber": "U***D",
+      "maskedPhone": null,
+      "maskedUpi": null,
+      "recurrentAssociations": [],
+      "savedAt": "2026-09-05T04:20:55.235Z"
+    }
+  ],
+  "contradictions": [
+    {
+      "caseId": 9999,
+      "contradictions": [],
+      "agreementMatrix": [],
+      "hasCriticalContradictions": false,
+      "summary": "All observable independent signals (OCR, Barcode, Metadata, Registry) demonstrate mutual agreement.",
+      "savedAt": "2026-09-05T04:18:48.219Z"
+    },
+    {
+      "caseId": 1,
+      "contradictions": [],
+      "agreementMatrix": [
+        {
+          "field": "Substrate Compression Integrity",
+          "ocrValue": "Readable text",
+          "qrValue": "N/A",
+          "registryValue": "Uniform baseline",
+          "status": "CONTRADICTION",
+          "confidence": 82
+        }
+      ],
+      "hasCriticalContradictions": false,
+      "summary": "All observable independent signals (OCR, Barcode, Metadata, Registry) demonstrate mutual agreement.",
+      "savedAt": "2026-09-05T04:20:55.236Z"
+    }
+  ],
+  "riskBreakdowns": [
+    {
+      "caseId": 9999,
+      "riskScore": 8,
+      "riskLevel": "VERY_LOW",
+      "confidence": 92,
+      "completeness": 56,
+      "tone": "green",
+      "modelDisagreement": false,
+      "disagreementExplanation": "",
+      "components": [
+        {
+          "component": "document_integrity",
+          "label": "Visual Substrate & ELA Integrity",
+          "observed": "Compression and quantization baseline is uniform",
+          "expected": "Uniform quantization baseline across canvas",
+          "deviation": 0.02,
+          "contribution": -10,
+          "confidence": 90,
+          "supportingEvidenceIds": [
+            "EV-ELA-BASELINE"
+          ]
+        }
+      ],
+      "epistemicReasoning": {
+        "facts": [
+          "Raster dimension: 800x600px."
+        ],
+        "observations": [
+          "No localized high-frequency compression anomalies detected on the document surface."
+        ],
+        "inferences": [],
+        "hypotheses": [],
+        "uncertainties": []
+      },
+      "topFindings": [
+        {
+          "title": "Verified Registry Match",
+          "detail": "Extracted claims correspond to registered official recruitment records.",
+          "severity": "low",
+          "confidence": 92
+        }
+      ],
+      "savedAt": "2026-09-05T04:18:48.220Z"
+    },
+    {
+      "caseId": 1,
+      "riskScore": 32,
+      "riskLevel": "LOW",
+      "confidence": 92,
+      "completeness": 56,
+      "tone": "green",
+      "modelDisagreement": false,
+      "disagreementExplanation": "",
+      "components": [
+        {
+          "component": "document_integrity",
+          "label": "Visual Substrate & ELA Integrity",
+          "observed": "1 anomalous compression region(s) detected",
+          "expected": "Uniform quantization baseline across canvas",
+          "deviation": 0.0231,
+          "contribution": 20,
+          "confidence": 88,
+          "supportingEvidenceIds": [
+            "EV-ELA-MAP"
+          ]
+        }
+      ],
+      "epistemicReasoning": {
+        "facts": [
+          "Raster dimension: 554x361px."
+        ],
+        "observations": [
+          "Local quantization residual error exceeds 3σ across 1 discrete region(s)."
+        ],
+        "inferences": [
+          "Document substrate contains elements introduced from an image with a different JPEG compression history."
+        ],
+        "hypotheses": [
+          "Isolated fields, signatures, or stamps may have been spliced into the original base document."
+        ],
+        "uncertainties": []
+      },
+      "topFindings": [
+        {
+          "title": "Localized Compression Discrepancy",
+          "detail": "1 region(s) exhibit significant ELA quantization deviations (>3σ).",
+          "severity": "high",
+          "confidence": 88
+        }
+      ],
+      "savedAt": "2026-09-05T04:20:55.237Z"
+    }
+  ],
+  "decisionGuidance": [
+    {
+      "caseId": 9999,
+      "recommendedDecision": "CLEAR_FOR_RELIANCE",
+      "decisionConfidence": 88,
+      "nextActions": [
+        {
+          "id": "ACT-04",
+          "title": "Initiate Active Challenge Live Capture",
+          "actionType": "live_capture",
+          "priority": "RECOMMENDED",
+          "description": "Prompt applicant to present the physical document under randomized optical guidance in the camera stage.",
+          "informationGain": 75,
+          "riskReduction": 70,
+          "cost": "LOW",
+          "privacyImpact": "MODERATE",
+          "rationale": "Differentiates genuine physical documents from digital screen presentations or printed cutouts."
+        }
+      ],
+      "missingEvidence": [
+        {
+          "id": "MISS-01",
+          "evidenceName": "Live Document Camera Capture",
+          "status": "MISSING",
+          "importance": "HIGH",
+          "potentialImpactOnDecision": "Eliminates pre-rendered digital spoofing and confirms physical possession of credentials."
+        },
+        {
+          "id": "MISS-02",
+          "evidenceName": "Cryptographic QR Barcode Payload",
+          "status": "MISSING",
+          "importance": "MEDIUM",
+          "potentialImpactOnDecision": "Provides direct tamper-proof payload check against visible printed document fields."
+        },
+        {
+          "id": "MISS-03",
+          "evidenceName": "Prior Document Revisions",
+          "status": "MISSING",
+          "importance": "MEDIUM",
+          "potentialImpactOnDecision": "Allows automated differential tracing of altered names, dates, or stamps."
+        }
+      ],
+      "checklist": [
+        {
+          "id": "CHK-01",
+          "task": "Immutable Byte Storage & SHA-256 Anchoring",
+          "category": "INTAKE",
+          "completed": true
+        },
+        {
+          "id": "CHK-02",
+          "task": "Multi-Scale Error Level Analysis (ELA)",
+          "category": "FORENSICS",
+          "completed": true
+        },
+        {
+          "id": "CHK-03",
+          "task": "OCR & Semantic Claim Decomposition",
+          "category": "VERIFICATION",
+          "completed": false
+        },
+        {
+          "id": "CHK-04",
+          "task": "2D Barcode (QR) Extraction & Cross-Check",
+          "category": "VERIFICATION",
+          "completed": false
+        },
+        {
+          "id": "CHK-05",
+          "task": "Authoritative Sovereign Registry Lookup",
+          "category": "VERIFICATION",
+          "completed": true
+        },
+        {
+          "id": "CHK-06",
+          "task": "Document Evolution & Historical Comparison",
+          "category": "FORENSICS",
+          "completed": false
+        },
+        {
+          "id": "CHK-07",
+          "task": "Active Challenge Liveness Verification",
+          "category": "DECISION",
+          "completed": false
+        },
+        {
+          "id": "CHK-08",
+          "task": "Final Supervisory Review & Court Dossier Sign-Off",
+          "category": "DECISION",
+          "completed": false
+        }
+      ],
+      "justification": "All observable claims align with registered official sources and visual substrate is uniform.",
+      "savedAt": "2026-09-05T04:18:48.221Z"
+    },
+    {
+      "caseId": 1,
+      "recommendedDecision": "CLEAR_FOR_RELIANCE",
+      "decisionConfidence": 88,
+      "nextActions": [
+        {
+          "id": "ACT-03",
+          "title": "Request Original High-Resolution Uncompressed Document (TIFF/PDF)",
+          "actionType": "request_original",
+          "priority": "RECOMMENDED",
+          "description": "Obtain original raster direct from the scanner or native digital PDF with embedded XMP font tables.",
+          "informationGain": 80,
+          "riskReduction": 75,
+          "cost": "LOW",
+          "privacyImpact": "MINIMAL",
+          "rationale": "Resolves whether compression discrepancies stem from repeated resaving or intentional localized text splicing."
+        },
+        {
+          "id": "ACT-04",
+          "title": "Initiate Active Challenge Live Capture",
+          "actionType": "live_capture",
+          "priority": "RECOMMENDED",
+          "description": "Prompt applicant to present the physical document under randomized optical guidance in the camera stage.",
+          "informationGain": 75,
+          "riskReduction": 70,
+          "cost": "LOW",
+          "privacyImpact": "MODERATE",
+          "rationale": "Differentiates genuine physical documents from digital screen presentations or printed cutouts."
+        }
+      ],
+      "missingEvidence": [
+        {
+          "id": "MISS-01",
+          "evidenceName": "Live Document Camera Capture",
+          "status": "MISSING",
+          "importance": "HIGH",
+          "potentialImpactOnDecision": "Eliminates pre-rendered digital spoofing and confirms physical possession of credentials."
+        },
+        {
+          "id": "MISS-02",
+          "evidenceName": "Cryptographic QR Barcode Payload",
+          "status": "MISSING",
+          "importance": "MEDIUM",
+          "potentialImpactOnDecision": "Provides direct tamper-proof payload check against visible printed document fields."
+        },
+        {
+          "id": "MISS-03",
+          "evidenceName": "Prior Document Revisions",
+          "status": "MISSING",
+          "importance": "MEDIUM",
+          "potentialImpactOnDecision": "Allows automated differential tracing of altered names, dates, or stamps."
+        }
+      ],
+      "checklist": [
+        {
+          "id": "CHK-01",
+          "task": "Immutable Byte Storage & SHA-256 Anchoring",
+          "category": "INTAKE",
+          "completed": true
+        },
+        {
+          "id": "CHK-02",
+          "task": "Multi-Scale Error Level Analysis (ELA)",
+          "category": "FORENSICS",
+          "completed": true
+        },
+        {
+          "id": "CHK-03",
+          "task": "OCR & Semantic Claim Decomposition",
+          "category": "VERIFICATION",
+          "completed": true
+        },
+        {
+          "id": "CHK-04",
+          "task": "2D Barcode (QR) Extraction & Cross-Check",
+          "category": "VERIFICATION",
+          "completed": false
+        },
+        {
+          "id": "CHK-05",
+          "task": "Authoritative Sovereign Registry Lookup",
+          "category": "VERIFICATION",
+          "completed": true
+        },
+        {
+          "id": "CHK-06",
+          "task": "Document Evolution & Historical Comparison",
+          "category": "FORENSICS",
+          "completed": false
+        },
+        {
+          "id": "CHK-07",
+          "task": "Active Challenge Liveness Verification",
+          "category": "DECISION",
+          "completed": false
+        },
+        {
+          "id": "CHK-08",
+          "task": "Final Supervisory Review & Court Dossier Sign-Off",
+          "category": "DECISION",
+          "completed": false
+        }
+      ],
+      "justification": "All observable claims align with registered official sources and visual substrate is uniform.",
+      "savedAt": "2026-09-05T04:20:55.238Z"
+    }
+  ],
   "fraudPatterns": [],
   "investigatorFeedback": []
 }

@@ -1,4 +1,4 @@
-﻿import fs from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
@@ -33,7 +33,7 @@ const KNOWN_EDITORS = [
 
 export async function runForensicAnalysis(
   filePath: string,
-  mimeType: string,
+  mimeType: string = "image/jpeg",
   evidenceId = "EV-001"
 ): Promise<ForensicFinding[]> {
   const findings: ForensicFinding[] = [];
